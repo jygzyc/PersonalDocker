@@ -1,6 +1,6 @@
 # android image builder
 
-1. Copy `docker-compose.override.yml.example` to `docker-compose.override.yml`, and change user uid:gid group
+1. Create directory of `ccache` and change it in `docker-compose.yml`
 2. Change sourceCode directory in `docker-compose.yml`
-3. run `docker-compose run --rm android_builder`
+3. run `docker compose run --rm android_builder bash` and build for yourself
 

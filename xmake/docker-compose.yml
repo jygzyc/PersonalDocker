@@ -1,0 +1,11 @@
+version: "3"
+services:
+  xmake_builder:
+    build: 
+      args:
+        android_ndk_version: r26c
+    command: /bin/bash
+    tty: true
+    stdin_open: true
+    volumes:
+      - /home/${USER}/project:/project # Project Directory

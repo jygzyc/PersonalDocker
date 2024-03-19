@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 
 # Modify the sources.list for improving download speed 
 RUN sed -i 's@//.*archive.ubuntu.com@//mirrors.ustc.edu.cn@g' /etc/apt/sources.list
@@ -17,9 +17,10 @@ RUN ln -s /usr/bin/python3 /usr/bin/python
 RUN curl https://storage.googleapis.com/git-repo-downloads/repo > /usr/bin/repo
 
 # Turn on caching
-# ENV USE_CCACHE 1
-# ENV CCACHE_EXEC /usr/bin/ccache
-# RUN ccache -M 50G
+ENV USE_CCACHE 1
+ENV CCACHE_EXEC /usr/bin/ccache
+ENV CCACHE_DIR=/ccache
+RUN ccache -M 50G
 
 # Mount source code directory
 VOLUME /source

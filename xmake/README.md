@@ -1,34 +1,10 @@
 # xmake dev env
 
-## build image
+## build 
 
-```bash
-docker buildx build . -t xmake:v1
-```
-
-## Running
-
-```bash
-docker run -it -v <your-project-dir>:/project --name xmake-dev xmake:v1 /bin/bash
-```
-
-Rerun bash
-
-```bash
-docker start xmake-dev && docker exec -it xmake-dev /bin/bash
-```
-
-Remove container
-
-```bash
-docker container rm xmake-dev -f
-```
-
-Remove image
-
-```bash
-docker image rm xmake -f
-```
+1. Change the project directory in `docker-compose.yml`
+2. Change the NDK version for your need in `docker-compose.yml`
+2. run `docker compose run --rm xmake_builder bash` and build for yourself
 
 ## Compile
 

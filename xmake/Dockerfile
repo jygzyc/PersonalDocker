@@ -1,15 +1,17 @@
-
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 
 # ndk env
 ENV ANDROID_NDK_HOME /opt/android-ndk
-ENV ANDROID_NDK_VERSION r25c
+ARG android_ndk_version 
+ENV ANDROID_NDK_VERSION ${android_ndk_version}
 ENV XMAKE_ROOT y
 
 # ------------------------------------------------------
 # --- Install required tools
-# Change apt sources list
-COPY sources.list /etc/apt/sources.list
+
+# Modify the sources.list for improving download speed 
+RUN sed -i 's@//.*archive.ubuntu.com@//mirrors.ustc.edu.cn@g' /etc/apt/sources.list
+
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update -qq && apt-get clean
 RUN apt-get install -y \
@@ -30,9 +32,9 @@ RUN apt-get install xmake
 # download
 RUN mkdir /opt/android-ndk-tmp && \
     cd /opt/android-ndk-tmp && \
-    wget -q https://dl.google.com/android/repository/android-ndk-${ANDROID_NDK_VERSION}-linux.zip && \
+    wget -t 3 -c https://dl.google.com/android/repository/android-ndk-${ANDROID_NDK_VERSION}-linux.zip && \
 # uncompress
-    unzip -q android-ndk-${ANDROID_NDK_VERSION}-linux-x86_64.zip && \
+    unzip -q android-ndk-${ANDROID_NDK_VERSION}-linux.zip && \
 # move to its final location
     mv ./android-ndk-${ANDROID_NDK_VERSION} ${ANDROID_NDK_HOME} && \
 # remove temp dir
